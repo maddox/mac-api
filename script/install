@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+echo "Installing mac-api..."
+
+APP_PATH=`pwd`
+USER_NAME=`whoami`
+
+mkdir -p ~/Library/LaunchAgents
+
+cp config/org.mac-api.plist ~/Library/LaunchAgents/org.mac-api.plist
+
+sed -i '' -e "s#%USER%#$USER_NAME#g" ~/Library/LaunchAgents/org.mac-api.plist
+sed -i '' -e "s#%PATH%#$APP_PATH#g" ~/Library/LaunchAgents/org.mac-api.plist
+
+launchctl load -w -F ~/Library/LaunchAgents/org.mac-api.plist

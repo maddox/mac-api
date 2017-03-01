@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if ! test $(which forever)
+then
+  echo
+  echo "!!!!"
+  echo "You don't have forever installed. You need to install it first."
+  echo
+  echo "Just install it with this command: "
+  echo 'sudo npm install forever -g'
+  echo
+  exit 1
+fi
+
+mkdir -p log
+
+npm install
+
+if [ ! -f  config/config.json ]
+then
+  echo
+  echo "==> Creating your config. Please edit config/config.json."
+  echo
+  cp config/config.sample.json config/config.json
+fi
+
+echo "Finished setting up mac-api! run it with script/server or install it with script/install."

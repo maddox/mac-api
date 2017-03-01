@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd "$(dirname "$0")/.."
+
+test -z "$NODE_ENV" &&
+  export NODE_ENV='development'
+
+if [ "$NODE_ENV" = "development" ]; then
+  /usr/bin/env forever -f config/forever/development.json
+else
+  /usr/bin/env forever start config/forever/production.json
+fi

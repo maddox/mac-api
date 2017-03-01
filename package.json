@@ -1,0 +1,23 @@
+{
+  "name": "mac-api",
+  "version": "0.0.1",
+  "description": "A simple server exposing useful commands for your macOS computer exposed by a RESTful interface.",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maddox/mac-api"
+  },
+  "author": "Jon Maddox <jon@jonmaddox.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maddox/mac-api/issues"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "morgan": "^1.6.1",
+    "body-parser": "^1.12.4",
+    "parameterize": "^0.0.7"
+  }
+}
