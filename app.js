@@ -29,7 +29,7 @@ app.post('/wake', function(req, res){
   })
 })
 
-app.post('/sleep_screen', function(req, res){
+app.post('/sleep_display', function(req, res){
   exec("pmset displaysleepnow", function(error, stdout, stderr){
     res.send('OK')
   })

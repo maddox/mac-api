@@ -52,7 +52,7 @@ These are the endpoints you can hit to do things.
 
 #### Endpoints
 
-    POST /display_sleep
+    POST /sleep_display
     POST /wake
 
 
