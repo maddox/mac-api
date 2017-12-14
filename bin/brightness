@@ -1,0 +1,12 @@
+#!/bin/sh
+
+osascript <<EOD
+  tell application "System Events"
+    repeat 32 times
+      key code 145
+    end repeat
+    repeat $1 times
+      key code 144
+    end repeat
+  end tell
+EOD
