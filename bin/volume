@@ -1,0 +1,5 @@
+#!/bin/sh
+
+osascript <<EOD
+  set volume output volume $1
+EOD
