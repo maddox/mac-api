@@ -39,4 +39,11 @@ app.post('/sleep_display', function(req, res){
   })
 })
 
+app.post('/brightness/:level', function(req, res){
+  level = req.params.level
+  exec(`brightness ${level}`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
 app.listen(process.env.PORT || 8686)
