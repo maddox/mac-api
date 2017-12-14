@@ -46,4 +46,11 @@ app.post('/brightness/:level', function(req, res){
   })
 })
 
+app.post('/dnd/:state', function(req, res){
+  state = req.params.state
+  exec(`dnd ${state}`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
 app.listen(process.env.PORT || 8686)
