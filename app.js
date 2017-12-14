@@ -8,6 +8,10 @@ var parameterize = require('parameterize')
 var config_dir = process.env.CONFIG_DIR || './config'
 var config = require(config_dir + '/config.json')
 
+var brightness = path.resolve(__dirname, 'bin', 'brightness')
+var audiodevice = path.resolve(__dirname, 'bin', 'audiodevice')
+var dnd = path.resolve(__dirname, 'bin', 'dnd')
+
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
