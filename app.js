@@ -53,4 +53,14 @@ app.post('/dnd/:state', function(req, res){
   })
 })
 
+app.post('/audiodevice/:port/:device', function(req, res){
+  port = req.params.port
+  device = req.params.device
+  console.log(device);
+  exec(`audiodevice ${port} "${device}"`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
+
 app.listen(process.env.PORT || 8686)
