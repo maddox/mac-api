@@ -41,14 +41,14 @@ app.post('/sleep_display', function(req, res){
 
 app.post('/brightness/:level', function(req, res){
   level = req.params.level
-  exec(`brightness ${level}`, function(error, stdout, stderr){
+  exec(`${brightness} ${level}`, function(error, stdout, stderr){
     res.send('OK')
   })
 })
 
 app.post('/dnd/:state', function(req, res){
   state = req.params.state
-  exec(`dnd ${state}`, function(error, stdout, stderr){
+  exec(`${dnd} ${state}`, function(error, stdout, stderr){
     res.send('OK')
   })
 })
@@ -57,7 +57,7 @@ app.post('/audiodevice/:port/:device', function(req, res){
   port = req.params.port
   device = req.params.device
   console.log(device);
-  exec(`audiodevice ${port} "${device}"`, function(error, stdout, stderr){
+  exec(`${audiodevice} ${port} "${device}"`, function(error, stdout, stderr){
     res.send('OK')
   })
 })
