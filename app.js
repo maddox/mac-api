@@ -12,6 +12,7 @@ var brightness = path.resolve(__dirname, 'bin', 'brightness')
 var volume = path.resolve(__dirname, 'bin', 'volume')
 var audiodevice = path.resolve(__dirname, 'bin', 'audiodevice')
 var dnd = path.resolve(__dirname, 'bin', 'dnd')
+var facetime = path.resolve(__dirname, 'bin', 'facetime')
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -65,6 +66,13 @@ app.post('/audiodevice/:port/:device', function(req, res){
   port = req.params.port
   device = req.params.device
   exec(`${audiodevice} ${port} "${device}"`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
+app.post('/facetime/:phonenumber', function(req, res){
+  phonenumber = req.params.phonenumber
+  exec(`${facetime} "${phonenumber}"`, function(error, stdout, stderr){
     res.send('OK')
   })
 })

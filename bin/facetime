@@ -1,0 +1,12 @@
+#!/bin/sh
+
+osascript <<EOD
+    do shell script "open facetime://" & quoted form of "$1"
+
+    tell application "System Events"
+    	repeat while not (second button of window 1 of application process "FaceTime" exists)
+    		delay 1
+    	end repeat
+    	click second button of window 1 of application process "FaceTime"
+    end tell
+EOD
