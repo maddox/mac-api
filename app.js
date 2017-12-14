@@ -24,7 +24,7 @@ app.get('/_ping', function(req, res){
 })
 
 app.get('/', function(req, res){
-  res.sendfile('index.html');
+  res.sendfile('index.html')
 })
 
 app.post('/wake', function(req, res){
@@ -56,7 +56,6 @@ app.post('/dnd/:state', function(req, res){
 app.post('/audiodevice/:port/:device', function(req, res){
   port = req.params.port
   device = req.params.device
-  console.log(device);
   exec(`${audiodevice} ${port} "${device}"`, function(error, stdout, stderr){
     res.send('OK')
   })
