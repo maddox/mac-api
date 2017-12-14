@@ -55,6 +55,7 @@ These are the endpoints you can hit to do things.
     POST /sleep_display
     POST /wake
     POST /brightness/:level - Level: 0-32
+    POST /volume/:level - Level: 0-100
     POST /dnd/:state - State: on or off
     POST /audiodevice/:port/:device - Port: input or output, Device: name of device
 

@@ -9,6 +9,7 @@ var config_dir = process.env.CONFIG_DIR || './config'
 var config = require(config_dir + '/config.json')
 
 var brightness = path.resolve(__dirname, 'bin', 'brightness')
+var volume = path.resolve(__dirname, 'bin', 'volume')
 var audiodevice = path.resolve(__dirname, 'bin', 'audiodevice')
 var dnd = path.resolve(__dirname, 'bin', 'dnd')
 
@@ -42,6 +43,13 @@ app.post('/sleep_display', function(req, res){
 app.post('/brightness/:level', function(req, res){
   level = req.params.level
   exec(`${brightness} ${level}`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
+app.post('/volume/:level', function(req, res){
+  level = req.params.level
+  exec(`${volume} ${level}`, function(error, stdout, stderr){
     res.send('OK')
   })
 })
