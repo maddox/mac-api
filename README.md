@@ -67,7 +67,7 @@ These are the endpoints you can hit to do things.
 
 ### Additional notes
 
-To use netflix commands in Safari, you must enable the 'Allow JavaScript from Apple Events' option in Safari's Develop menu to use 'do JavaScript'.
+To use netflix commands in Safari, you must enable the 'Allow JavaScript from Apple Events' option in Safari's Develop menu.
 
 ## Contributions
 
