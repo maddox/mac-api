@@ -1,0 +1,88 @@
+#!/bin/sh
+
+osascript <<EOD
+
+tell application "Google Chrome"
+    repeat with t in tabs of windows
+        tell t
+            if URL starts with "https://www.netflix.com/watch" then
+                if ("$1" = "playpause") then
+                    execute javascript "
+    					var v = document.querySelector('video');
+    					if (v.paused) {
+    					  v.play();
+    					}
+    					else {
+    					  v.pause();
+    					}
+    				"
+                else if ("$1" = "play") then
+                    execute javascript "document.querySelector('video').play()"
+                else if ("$1" = "pause") then
+                    execute javascript "document.querySelector('video').pause()"
+
+                #Note:
+                #backward and forward commands are not working
+                #cause: netflix object is not available from applescript
+                #todo: fix it
+                else if ("$1" = "forward") then
+                    execute javascript "
+                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
+                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
+                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
+						player.seek(player.getCurrentTime()-10000);
+					"
+                else if ("$1" = "backward") then
+                    execute javascript "
+                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
+						player.seek(player.getCurrentTime()+30000);
+					"
+                end if
+            end if
+        end tell
+    end repeat
+end tell
+
+
+tell application "Safari"
+	repeat with t in tabs of windows
+		tell t
+			if URL starts with "https://www.netflix.com/watch" then
+				if ("$1" = "playpause") then
+					do JavaScript "
+    					var v = document.querySelector('video');
+    					if (v.paused) {
+    					  v.play();
+    					}
+    					else {
+    					  v.pause();
+    					}
+    				"
+				else if ("$1" = "play") then
+					do JavaScript "document.querySelector('video').play()"
+				else if ("$1" = "pause") then
+					do JavaScript "document.querySelector('video').pause()"
+				else if ("$1" = "forward") then
+					do JavaScript "
+                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
+                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
+                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
+						player.seek(player.getCurrentTime()-10000);
+					"
+				else if ("$1" = "backward") then
+					do JavaScript "
+                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
+						player.seek(player.getCurrentTime()+30000);
+					"
+				end if
+			end if
+		end tell
+	end repeat
+end tell
+
+
+EOD
