@@ -12,6 +12,7 @@ var brightness = path.resolve(__dirname, 'bin', 'brightness')
 var volume = path.resolve(__dirname, 'bin', 'volume')
 var audiodevice = path.resolve(__dirname, 'bin', 'audiodevice')
 var dnd = path.resolve(__dirname, 'bin', 'dnd')
+var netflix = path.resolve(__dirname, 'bin', 'netflix')
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -68,6 +69,15 @@ app.post('/audiodevice/:port/:device', function(req, res){
     res.send('OK')
   })
 })
+
+
+app.post('/netflix/:command', function(req, res){
+    command = res.params.command
+  exec(`${netflix} "${command}"`, function(error, stdout, stderr){
+    res.send('OK')
+  })
+})
+
 
 
 app.listen(process.env.PORT || 8686)

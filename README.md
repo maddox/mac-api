@@ -13,6 +13,7 @@ your Mac. This is mostly useful for a desktop computer that is always on.
 * Set your volume.
 * Toggle Do Not Disturb mode on or off.
 * Set the audio device used for input or output.
+* Control netflix playback
 
 ## Setup
 
@@ -62,6 +63,11 @@ These are the endpoints you can hit to do things.
     POST /volume/:level - Level: 0-100
     POST /dnd/:state - State: on or off
     POST /audiodevice/:port/:device - Port: input or output, Device: name of device
+    POST /netflix/:command - Send command to netflix player on Google Chrome or Safari - Command can be playpause, play or pause. Safari also support commands forward and backward.</p>
+
+### Additional notes
+
+To use netflix commands in Safari, you must enable the 'Allow JavaScript from Apple Events' option in Safari's Develop menu.
 
 ## Contributions
 
