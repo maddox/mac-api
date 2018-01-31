@@ -11,10 +11,10 @@ if application "Google Chrome" is running then
 
             set netflix to execute javascript "
               var mac_api = {};
+              mac_api.status = (document.querySelector('video').paused)? 'paused':'playing';
               mac_api.title = (document.querySelector('.ellipsize-text'))? (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText:'paused for too long';
               mac_api.episode = (document.querySelector('.ellipsize-text') && document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
               mac_api.muted = document.querySelector('video').muted;
-              mac_api.paused = document.querySelector('video').paused;
               mac_api.ended = document.querySelector('video').ended;
               mac_api.duration = document.querySelector('video').duration;
               mac_api.currentTime = document.querySelector('video').currentTime;
@@ -71,10 +71,10 @@ if application "Safari" is running then
           if ("$1" = "get") then
             set netflix to do Javascript "
               var mac_api = {};
+              mac_api.status = (document.querySelector('video').paused)? 'paused':'playing';
               mac_api.title = (document.querySelector('.ellipsize-text'))? (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText:'paused for too long';
               mac_api.episode = (document.querySelector('.ellipsize-text') && document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
               mac_api.muted = document.querySelector('video').muted;
-              mac_api.paused = document.querySelector('video').paused;
               mac_api.ended = document.querySelector('video').ended;
               mac_api.duration = document.querySelector('video').duration;
               mac_api.currentTime = document.querySelector('video').currentTime;
@@ -115,5 +115,10 @@ if application "Safari" is running then
     end repeat
   end tell
 end if
+
+if ("$1" = "get") then
+  return "{'status':'idle'}"
+end if
+
 
 EOD
