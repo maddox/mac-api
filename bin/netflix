@@ -11,14 +11,13 @@ if application "Google Chrome" is running then
 
             set netflix to execute javascript "
               var mac_api = {};
-              mac_api.title = (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText;
-              mac_api.episode = (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
+              mac_api.title = (document.querySelector('.ellipsize-text'))? (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText:'paused for too long';
+              mac_api.episode = (document.querySelector('.ellipsize-text') && document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
               mac_api.muted = document.querySelector('video').muted;
               mac_api.paused = document.querySelector('video').paused;
               mac_api.ended = document.querySelector('video').ended;
               mac_api.duration = document.querySelector('video').duration;
               mac_api.currentTime = document.querySelector('video').currentTime;
-              //console.log(netflix.falkorCache.videos[80107084].BGImages[480].webp[0].url)
               JSON.stringify(mac_api);
             "
             return netflix
@@ -68,7 +67,20 @@ if application "Safari" is running then
     repeat with t in tabs of windows
       tell t
         if URL starts with "https://www.netflix.com/watch" then
-          if ("$1" = "playpause") then
+          if ("$1" = "get") then
+            set netflix to do Javascript "
+              var mac_api = {};
+              mac_api.title = (document.querySelector('.ellipsize-text'))? (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText:'paused for too long';
+              mac_api.episode = (document.querySelector('.ellipsize-text') && document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
+              mac_api.muted = document.querySelector('video').muted;
+              mac_api.paused = document.querySelector('video').paused;
+              mac_api.ended = document.querySelector('video').ended;
+              mac_api.duration = document.querySelector('video').duration;
+              mac_api.currentTime = document.querySelector('video').currentTime;
+              JSON.stringify(mac_api);
+            "
+            return netflix
+          else if ("$1" = "playpause") then
             do JavaScript "
               var v = document.querySelector('video');
               if (v.paused) {
