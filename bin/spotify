@@ -1,0 +1,20 @@
+#!/bin/sh
+
+osascript <<EOD
+
+tell application "Spotify"
+	if ("$1" = "playpause") then
+		playpause
+	else if ("$1" = "play") then
+		play
+	else if ("$1" = "pause") then
+		pause
+	else if ("$1" = "next") then
+		next track
+	else if ("$1" = "previous") then
+		previous track
+	end if
+end tell
+
+
+EOD

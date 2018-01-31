@@ -14,6 +14,7 @@ your Mac. This is mostly useful for a desktop computer that is always on.
 * Toggle Do Not Disturb mode on or off.
 * Set the audio device used for input or output.
 * Control netflix playback
+* Control Spotify playback
 
 ## Setup
 
@@ -64,6 +65,7 @@ These are the endpoints you can hit to do things.
     POST /dnd/:state - State: on or off
     POST /audiodevice/:port/:device - Port: input or output, Device: name of device
     POST /netflix/:command - Send command to netflix player on Google Chrome or Safari - Command can be playpause, play or pause. Safari also support commands forward and backward.</p>
+    POST /spotify/:command - Command: playpause, play, pause, next or previous
 
 ### Additional notes
 
