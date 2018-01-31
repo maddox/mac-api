@@ -2,87 +2,105 @@
 
 osascript <<EOD
 
-tell application "Google Chrome"
+if application "Google Chrome" is running then
+  tell application "Google Chrome"
     repeat with t in tabs of windows
-        tell t
-            if URL starts with "https://www.netflix.com/watch" then
-                if ("$1" = "playpause") then
-                    execute javascript "
-    					var v = document.querySelector('video');
-    					if (v.paused) {
-    					  v.play();
-    					}
-    					else {
-    					  v.pause();
-    					}
-    				"
-                else if ("$1" = "play") then
-                    execute javascript "document.querySelector('video').play()"
-                else if ("$1" = "pause") then
-                    execute javascript "document.querySelector('video').pause()"
+      tell t
+        if URL starts with "https://www.netflix.com/watch" then
+          if ("$1" = "get") then
 
-                #Note:
-                #backward and forward commands are not working
-                #cause: netflix object is not available from applescript
-                #todo: fix it
-                else if ("$1" = "forward") then
-                    execute javascript "
-                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
-                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
-                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
-						player.seek(player.getCurrentTime()-10000);
-					"
-                else if ("$1" = "backward") then
-                    execute javascript "
-                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
-                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
-                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
-						player.seek(player.getCurrentTime()+30000);
-					"
-                end if
-            end if
-        end tell
+            set netflix to execute javascript "
+              var mac_api = {};
+              mac_api.title = (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[0].innerText:document.querySelector('.ellipsize-text').innerText;
+              mac_api.episode = (document.querySelector('.ellipsize-text').childNodes[1])? document.querySelector('.ellipsize-text').childNodes[1].innerText+' - '+document.querySelector('.ellipsize-text').childNodes[2].innerText:'';
+              mac_api.muted = document.querySelector('video').muted;
+              mac_api.paused = document.querySelector('video').paused;
+              mac_api.ended = document.querySelector('video').ended;
+              mac_api.duration = document.querySelector('video').duration;
+              mac_api.currentTime = document.querySelector('video').currentTime;
+              //console.log(netflix.falkorCache.videos[80107084].BGImages[480].webp[0].url)
+              JSON.stringify(mac_api);
+            "
+            return netflix
+
+          else if ("$1" = "playpause") then
+            execute javascript "
+             var v = document.querySelector('video');
+             if (v.paused) {
+              v.play();
+             }
+             else {
+              v.pause();
+             }
+            "
+          else if ("$1" = "play") then
+            execute javascript "document.querySelector('video').play()"
+          else if ("$1" = "pause") then
+            execute javascript "document.querySelector('video').pause()"
+
+          #Note:
+          #backward and forward commands are not working
+          #cause: netflix object is not available from applescript
+          #todo: fix it
+          else if ("$1" = "forward") then
+            execute javascript "
+              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
+              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
+              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
+              player.seek(player.getCurrentTime()-10000);
+             "
+          else if ("$1" = "backward") then
+            execute javascript "
+              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
+              player.seek(player.getCurrentTime()+30000);
+             "
+          end if
+        end if
+      end tell
     end repeat
-end tell
+  end tell
+end if
 
-
-tell application "Safari"
-	repeat with t in tabs of windows
-		tell t
-			if URL starts with "https://www.netflix.com/watch" then
-				if ("$1" = "playpause") then
-					do JavaScript "
-    					var v = document.querySelector('video');
-    					if (v.paused) {
-    					  v.play();
-    					}
-    					else {
-    					  v.pause();
-    					}
-    				"
-				else if ("$1" = "play") then
-					do JavaScript "document.querySelector('video').play()"
-				else if ("$1" = "pause") then
-					do JavaScript "document.querySelector('video').pause()"
-				else if ("$1" = "forward") then
-					do JavaScript "
-                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
-                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
-                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
-						player.seek(player.getCurrentTime()-10000);
-					"
-				else if ("$1" = "backward") then
-					do JavaScript "
-                        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
-                        var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
-                        var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
-						player.seek(player.getCurrentTime()+30000);
-					"
-				end if
-			end if
-		end tell
-	end repeat
-end tell
-
+if application "Safari" is running then
+  tell application "Safari"
+    repeat with t in tabs of windows
+      tell t
+        if URL starts with "https://www.netflix.com/watch" then
+          if ("$1" = "playpause") then
+            do JavaScript "
+              var v = document.querySelector('video');
+              if (v.paused) {
+                v.play();
+              }
+              else {
+                v.pause();
+              }
+            "
+          else if ("$1" = "play") then
+            do JavaScript "document.querySelector('video').play()"
+          else if ("$1" = "pause") then
+            do JavaScript "document.querySelector('video').pause()"
+          else if ("$1" = "forward") then
+            do JavaScript "
+              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
+              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
+              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
+              player.seek(player.getCurrentTime()-10000);
+            "
+          else if ("$1" = "backward") then
+            do JavaScript "
+              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
+              player.seek(player.getCurrentTime()+30000);
+            "
+          end if
+        end if
+      end tell
+    end repeat
+  end tell
+end if
 
 EOD

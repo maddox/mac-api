@@ -72,9 +72,14 @@ app.post('/audiodevice/:port/:device', function(req, res){
 
 
 app.post('/netflix/:command', function(req, res){
-    command = res.params.command
+  command = res.params.command
   exec(`${netflix} "${command}"`, function(error, stdout, stderr){
     res.send('OK')
+  })
+})
+app.get('/netflix', function(req, res){
+  exec(`${netflix} get`, function(error, stdout, stderr){
+    res.send(stdout)
   })
 })
 
