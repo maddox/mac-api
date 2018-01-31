@@ -38,23 +38,24 @@ if application "Google Chrome" is running then
             execute javascript "document.querySelector('video').pause()"
 
           #Note:
-          #backward and forward commands are not working
-          #cause: netflix object is not available from applescript
-          #todo: fix it
+          #backward and forward commands under chrome need a hack to be executed
+          #this will force the focus on the netflix tab
           else if ("$1" = "forward") then
-            execute javascript "
-              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer
-              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0]
-              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId)
+            set query to "
+              var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+              var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+              var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
               player.seek(player.getCurrentTime()-10000);
-             "
+            " as text
+            set URL to "javascript:" & query
           else if ("$1" = "backward") then
-            execute javascript "
+            set query to "
               var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
               var playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
               var player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
               player.seek(player.getCurrentTime()+30000);
-             "
+            " as text
+            set URL to "javascript:" & query
           end if
         end if
       end tell
