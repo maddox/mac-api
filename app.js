@@ -4,6 +4,7 @@ var express = require('express')
 var morgan = require('morgan')
 var bodyParser = require('body-parser')
 var parameterize = require('parameterize')
+var isCameraOn = require('is-camera-on')
 
 var config_dir = process.env.CONFIG_DIR || './config'
 var config = require(config_dir + '/config.json')
@@ -78,6 +79,10 @@ app.post('/netflix/:command', function(req, res){
   })
 })
 
-
+app.get('/camera', function(req, res){
+  isCameraOn().then(status => {
+    res.send(status)
+  });
+})
 
 app.listen(process.env.PORT || 8686)
