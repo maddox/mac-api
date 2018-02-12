@@ -84,7 +84,8 @@ app.post('/netflix/:command', function(req, res){
 app.get('/camera', function(req, res){
   isCameraOn().then(status => {
     res.send(status)
-  });
+  })
+})
 
 app.get('/hid_idle_time', function(req, res){
   exec(`${ioreg} -a -r -n IOHIDSystem`, function(error, stdout, stderr){
