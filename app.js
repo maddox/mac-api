@@ -4,6 +4,7 @@ var express = require('express')
 var morgan = require('morgan')
 var bodyParser = require('body-parser')
 var parameterize = require('parameterize')
+var isCameraOn = require('is-camera-on')
 var plist = require('plist')
 
 var config_dir = process.env.CONFIG_DIR || './config'
@@ -79,6 +80,11 @@ app.post('/netflix/:command', function(req, res){
     res.send('OK')
   })
 })
+
+app.get('/camera', function(req, res){
+  isCameraOn().then(status => {
+    res.send(status)
+  });
 
 app.get('/hid_idle_time', function(req, res){
   exec(`${ioreg} -a -r -n IOHIDSystem`, function(error, stdout, stderr){

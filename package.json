@@ -19,6 +19,7 @@
     "morgan": "^1.6.1",
     "body-parser": "^1.12.4",
     "parameterize": "^0.0.7",
+    "is-camera-on": "^2.0.0",
     "plist": "1.2.0"
   }
 }
