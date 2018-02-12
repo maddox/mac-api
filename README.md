@@ -64,6 +64,7 @@ These are the endpoints you can hit to do things.
     POST /dnd/:state - State: on or off
     POST /audiodevice/:port/:device - Port: input or output, Device: name of device
     POST /netflix/:command - Send command to netflix player on Google Chrome or Safari - Command can be playpause, play or pause. Safari also support commands forward and backward.</p>
+    GET /hid_idle_time - returns the time in seconds since the last keyboard/mouse interaction
 
 ### Additional notes
 

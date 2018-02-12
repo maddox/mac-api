@@ -4,6 +4,7 @@ var express = require('express')
 var morgan = require('morgan')
 var bodyParser = require('body-parser')
 var parameterize = require('parameterize')
+var plist = require('plist')
 
 var config_dir = process.env.CONFIG_DIR || './config'
 var config = require(config_dir + '/config.json')
@@ -13,6 +14,7 @@ var volume = path.resolve(__dirname, 'bin', 'volume')
 var audiodevice = path.resolve(__dirname, 'bin', 'audiodevice')
 var dnd = path.resolve(__dirname, 'bin', 'dnd')
 var netflix = path.resolve(__dirname, 'bin', 'netflix')
+var ioreg = '/usr/sbin/ioreg'
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -78,6 +80,10 @@ app.post('/netflix/:command', function(req, res){
   })
 })
 
-
+app.get('/hid_idle_time', function(req, res){
+  exec(`${ioreg} -a -r -n IOHIDSystem`, function(error, stdout, stderr){
+    res.json(plist.parse(stdout)[0]["HIDIdleTime"] / 1000000000)
+  })
+})
 
 app.listen(process.env.PORT || 8686)
