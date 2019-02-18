@@ -20,6 +20,6 @@
     "is-camera-on": "^2.0.0",
     "morgan": "^1.9.1",
     "parameterize": "^0.0.7",
-    "plist": "1.2.0"
+    "plist": "3.0.1"
   }
 }
